@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 pushover_token = None
 pushover_user = None
 pushover = None
+priority = 1
 
 class PushOver(CBPiExtension):
 
@@ -98,6 +99,7 @@ class PushOver(CBPiExtension):
             pushoverData["user"] = pushover_user
             pushoverData["message"] = message 
             pushoverData["title"] = title
+            pushoverData["priority"] = priority
             requests.post("https://api.pushover.net/1/messages.json", data=pushoverData)
 
 def setup(cbpi):
