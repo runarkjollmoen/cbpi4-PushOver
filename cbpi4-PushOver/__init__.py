@@ -87,6 +87,21 @@ class PushOver(CBPiExtension):
                     logger.warning('Unable to update config')
                     logger.error(e)
 
+        if pushover_priority is None:
+            logger.info("INIT Pushover Priority")
+            try:
+                await self.cbpi.config.add("pushover_priority", "", type=ConfigType.STRING, description="Pushover notification priority",source=self.name)
+            except Exception as e:
+                logger.warning('Unable to update config')
+                logger.error(e)
+        else:
+            if self.pushover_update == None or self.pushover_update != self.version:
+                try:
+                    await self.cbpi.config.add("pushover_priority", pushover_priority, type=ConfigType.STRING, description="Pushover Notification Priority",source=self.name)
+                except Exception as e:
+                    logger.warning('Unable to update config')
+                    logger.error(e)
+
         if self.pushover_update == None or self.pushover_update != self.version:
             try:
                 await self.cbpi.config.add(self.name+"_update", self.version, type=ConfigType.STRING, description="Pushover Update Version",source="hidden")
