@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 pushover_token = None
 pushover_user = None
 pushover = None
-priority = None
+pushover_priority = None
 
 class PushOver(CBPiExtension):
 
