@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 pushover_token = None
 pushover_user = None
 pushover = None
-priority = 1
+priority = None
 
 class PushOver(CBPiExtension):
 
@@ -52,8 +52,10 @@ class PushOver(CBPiExtension):
     async def pushover_settings(self):
         global pushover_token
         global pushover_user
+        global pushover_priority
         pushover_user = self.cbpi.config.get("pushover_user", None)
         pushover_token = self.cbpi.config.get("pushover_token", None)
+        pushover_priority = self.cbpi.config.get("pushover_priority", None)
 
         if pushover_token is None:
             logger.info("INIT Pushover Token")
@@ -81,6 +83,21 @@ class PushOver(CBPiExtension):
             if self.pushover_update == None or self.pushover_update != self.version:
                 try:
                     await self.cbpi.config.add("pushover_user", pushover_user, type=ConfigType.STRING, description="Pushover User Key",source=self.name)
+                except Exception as e:
+                    logger.warning('Unable to update config')
+                    logger.error(e)
+
+         if pushover_priority is None:
+            logger.info("INIT Pushover Priority")
+            try:
+                await self.cbpi.config.add("pushover_priority", "", type=ConfigType.STRING, description="Pushover notification priority",source=self.name)
+            except Exception as e:
+                logger.warning('Unable to update config')
+                logger.error(e)
+        else:
+            if self.pushover_update == None or self.pushover_update != self.version:
+                try:
+                    await self.cbpi.config.add("pushover_priority", pushover_priority, type=ConfigType.STRING, description="Pushover Notification Priority",source=self.name)
                 except Exception as e:
                     logger.warning('Unable to update config')
                     logger.error(e)
