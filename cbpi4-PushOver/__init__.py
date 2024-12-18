@@ -115,7 +115,7 @@ class PushOver(CBPiExtension):
             pushoverData["user"] = pushover_user
             pushoverData["message"] = message 
             pushoverData["title"] = title
-            pushoverData["priority"] = priority
+            pushoverData["priority"] = pushover_priority
             requests.post("https://api.pushover.net/1/messages.json", data=pushoverData)
 
 def setup(cbpi):
