@@ -101,14 +101,13 @@ class PushOver(CBPiExtension):
                 except Exception as e:
                     logger.warning('Unable to update config')
                     logger.error(e)
-            
+
         if self.pushover_update == None or self.pushover_update != self.version:
             try:
                 await self.cbpi.config.add(self.name+"_update", self.version, type=ConfigType.STRING, description="Pushover Update Version",source="hidden")
             except Exception as e:
                 logger.warning('Unable to update config')
                 logger.error(e)
-        
 
     async def messageEvent(self, cbpi, title, message, type, action):
             pushoverData = {}
